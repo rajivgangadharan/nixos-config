@@ -97,15 +97,9 @@
                   mountOptions = [ "compress=zstd" "noatime" "ssd" "discard=async" ];
                 };
 
-                # Variable data — @log mounts on top for finer granularity
+                # Variable data — /var/log lives inside, captured by var snapshots
                 "@var" = {
                   mountpoint   = "/var";
-                  mountOptions = [ "compress=zstd" "noatime" "ssd" "discard=async" ];
-                };
-
-                # System logs — persists across root rollbacks
-                "@log" = {
-                  mountpoint   = "/var/log";
                   mountOptions = [ "compress=zstd" "noatime" "ssd" "discard=async" ];
                 };
 
