@@ -53,12 +53,6 @@
                   mountOptions = [ "compress=zstd" "noatime" "ssd" "discard=async" ];
                 };
 
-                # Nix store — large, read-heavy; exclude from root snapshots
-                "@nix" = {
-                  mountpoint   = "/nix";
-                  mountOptions = [ "compress=zstd" "noatime" "ssd" "discard=async" ];
-                };
-
                 # Variable data — excluded from root snapshots; @log mounts on top
                 "@var" = {
                   mountpoint   = "/var";
@@ -109,6 +103,12 @@
               extraArgs = [ "-f" "-L" "data" ];
 
               subvolumes = {
+                # Nix store — large, read-heavy; kept off the root NVMe
+                "@nix" = {
+                  mountpoint   = "/nix";
+                  mountOptions = [ "compress=zstd" "noatime" "ssd" "discard=async" ];
+                };
+
                 "@data" = {
                   mountpoint   = "/data";
                   mountOptions = [ "compress=zstd" "noatime" "ssd" "discard=async" ];
