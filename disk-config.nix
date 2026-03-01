@@ -65,6 +65,12 @@
                   mountOptions = [ "compress=zstd" "noatime" "ssd" "discard=async" ];
                 };
 
+                # Optional software — excluded from root snapshots
+                "@opt" = {
+                  mountpoint   = "/opt";
+                  mountOptions = [ "compress=zstd" "noatime" "ssd" "discard=async" ];
+                };
+
                 # Snapshots mount point (used by snapper / btrbk)
                 "@snapshots" = {
                   mountpoint   = "/.snapshots";
