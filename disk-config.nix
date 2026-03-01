@@ -1,5 +1,5 @@
 # Disko disk layout
-# Partitions /dev/nvme0n1 (NVMe SSD — root) and /dev/sda (HDD — data).
+# Partitions /dev/nvme0n1 (NVMe SSD — root) and /dev/sda (SATA SSD — data).
 # Used during install: disko --mode zap_create_mount ./disk-config.nix
 # The disko NixOS module (imported in configuration.nix) then generates
 # the fileSystems / swapDevices entries from this file automatically.
@@ -64,6 +64,12 @@
                   mountpoint   = "/nix";
                   mountOptions = [ "compress=zstd" "noatime" "ssd" "discard=async" ];
                 };
+
+                # Variable data — on NVMe to avoid SATA boot dependency
+                "@var" = {
+                  mountpoint   = "/var";
+                  mountOptions = [ "compress=zstd" "noatime" "ssd" "discard=async" ];
+                };
               };
             };
           };
@@ -94,12 +100,6 @@
                 # User home — snapshotted independently of root
                 "@home" = {
                   mountpoint   = "/home";
-                  mountOptions = [ "compress=zstd" "noatime" "ssd" "discard=async" ];
-                };
-
-                # Variable data — /var/log lives inside, captured by var snapshots
-                "@var" = {
-                  mountpoint   = "/var";
                   mountOptions = [ "compress=zstd" "noatime" "ssd" "discard=async" ];
                 };
 
