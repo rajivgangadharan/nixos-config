@@ -94,18 +94,18 @@
                 # Snapshots (used by snapper / btrbk) — bulk storage, fits on SATA
                 "@snapshots" = {
                   mountpoint   = "/.snapshots";
-                  mountOptions = [ "compress=zstd" "noatime" "ssd" "discard=async" ];
+                  mountOptions = [ "compress=zstd" "noatime" "ssd" "discard=async" "nofail" "x-systemd.device-timeout=5" ];
                 };
 
                 # User home — snapshotted independently of root
                 "@home" = {
                   mountpoint   = "/home";
-                  mountOptions = [ "compress=zstd" "noatime" "ssd" "discard=async" ];
+                  mountOptions = [ "compress=zstd" "noatime" "ssd" "discard=async" "nofail" "x-systemd.device-timeout=5" ];
                 };
 
                 "@data" = {
                   mountpoint   = "/data";
-                  mountOptions = [ "compress=zstd" "noatime" "ssd" "discard=async" ];
+                  mountOptions = [ "compress=zstd" "noatime" "ssd" "discard=async" "nofail" "x-systemd.device-timeout=5" ];
                 };
               };
             };
