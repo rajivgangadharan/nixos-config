@@ -30,7 +30,7 @@
   boot.loader.systemd-boot.enable      = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # Hibernation — swap is partition 2 on the NVMe (36G, matches 32G RAM)
+  # Hibernation — swap is partition 3 on the NVMe (36G, matches 32G RAM)
   boot.resumeDevice = "/dev/disk/by-id/nvme-CT500P3SSD8_2234E65A6AD2-part3";
 
   # ── Networking ───────────────────────────────────────────────────────────────
