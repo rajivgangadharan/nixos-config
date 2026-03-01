@@ -151,7 +151,6 @@
     xdotool               # window manipulation (used for kill keybinding)
     xdg-utils             # xdg-open, xdg-settings
     xss-lock              # auto-lock on screen blank / suspend
-    i3lock-color          # screen lock with colour support
 
     # ── GTK theming ─────────────────────────────────────────────────────────────
     arc-theme             # Arc-Dark GTK theme (close to SolArc-Dark)
@@ -176,10 +175,6 @@
     # ── Screenshots ─────────────────────────────────────────────────────────────
     scrot                 # screenshot tool (Print key)
     xclip                 # clipboard integration
-
-    # ── Display layout ───────────────────────────────────────────────────────────
-    arandr                # GUI display layout tool
-    pavucontrol           # GUI audio control
 
     # ── Essentials ──────────────────────────────────────────────────────────────
     git curl wget htop xorg.xsetroot
