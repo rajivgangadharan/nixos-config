@@ -320,28 +320,31 @@ in {
 
       # ── Startup applications ──────────────────────────────────────────────────────
       startup = [
-        # Wallpaper — solid Solarized Dark base03 (#002b36)
+        # Wallpaper — re-apply on every i3 reload (always = true is intentional here)
         # Replace with: feh --bg-scale /path/to/wallpaper.jpg  then remove the xsetroot line
-        { command = "xsetroot -solid '#002b36'"; always = true; notification = false; }
+        { command = "xsetroot -solid '#002b36'"; always = true;  notification = false; }
+
+        # Daemons — always = false: do NOT respawn on i3 reload/restart,
+        # which would leave multiple instances running.
 
         # Compositor (picom) — GLX backend with shadows + fading
         # Config written to ~/.config/picom/picom.conf below
-        { command = "picom --daemon"; notification = false; }
+        { command = "picom --daemon";                                                        always = false; notification = false; }
 
         # Polkit authentication agent (same as regolith-session-flashback)
-        { command = polkitAgent; notification = false; }
+        { command = polkitAgent;                                                             always = false; notification = false; }
 
         # Network Manager tray applet
-        { command = "nm-applet --indicator"; notification = false; }
+        { command = "nm-applet --indicator";                                                 always = false; notification = false; }
 
         # Hide mouse after 5 seconds of idle (regolith-unclutter-xfixes)
-        { command = "unclutter -idle 5 -root"; notification = false; }
+        { command = "unclutter -idle 5 -root";                                               always = false; notification = false; }
 
         # Notification daemon (replaces rofication-daemon)
-        { command = "dunst"; notification = false; }
+        { command = "dunst";                                                                 always = false; notification = false; }
 
         # Lock screen on suspend / lid close
-        { command = "xss-lock --transfer-sleep-lock -- i3lock-color -c 002b36 --nofork"; notification = false; }
+        { command = "xss-lock --transfer-sleep-lock -- i3lock-color -c 002b36 --nofork";    always = false; notification = false; }
       ];
     };
 
