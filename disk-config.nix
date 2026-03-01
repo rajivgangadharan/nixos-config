@@ -59,9 +59,9 @@
                   mountOptions = [ "compress=zstd" "noatime" "ssd" "discard=async" ];
                 };
 
-                # Snapshots mount point (used by snapper / btrbk)
-                "@snapshots" = {
-                  mountpoint   = "/.snapshots";
+                # Nix store — large, read-heavy; on NVMe for build performance
+                "@nix" = {
+                  mountpoint   = "/nix";
                   mountOptions = [ "compress=zstd" "noatime" "ssd" "discard=async" ];
                 };
               };
@@ -85,9 +85,9 @@
               extraArgs = [ "-f" "-L" "data" ];
 
               subvolumes = {
-                # Nix store — large, read-heavy
-                "@nix" = {
-                  mountpoint   = "/nix";
+                # Snapshots (used by snapper / btrbk) — bulk storage, fits on SATA
+                "@snapshots" = {
+                  mountpoint   = "/.snapshots";
                   mountOptions = [ "compress=zstd" "noatime" "ssd" "discard=async" ];
                 };
 
