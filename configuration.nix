@@ -163,6 +163,7 @@
     # ── Terminal & file manager ──────────────────────────────────────────────────
     alacritty             # terminal (MesloLGS Nerd Font configured in home.nix)
     nautilus              # file manager ($mod+Shift+n)
+    gnome-control-center  # settings ($mod+c/d/w/b — launched with XDG_CURRENT_DESKTOP=GNOME)
 
     # ── System tray ─────────────────────────────────────────────────────────────
     networkmanagerapplet  # nm-applet — wifi/vpn tray icon
