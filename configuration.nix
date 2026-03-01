@@ -180,6 +180,13 @@
 
     # ── Essentials ──────────────────────────────────────────────────────────────
     git curl wget htop xorg.xsetroot
+
+    # ── Document generation ──────────────────────────────────────────────────────
+    pandoc
+    (texliveSmall.withPackages (ps: with ps; [
+      collection-latexrecommended  # article class, geometry, hyperref, etc.
+      collection-fontsrecommended  # lm, cm-super
+    ]))
   ];
 
   # ── Hardware ──────────────────────────────────────────────────────────────────
