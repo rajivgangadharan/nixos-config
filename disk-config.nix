@@ -9,7 +9,7 @@
     # ── NVMe SSD — root drive ───────────────────────────────────────────────────
     disk.nvme0 = {
       type   = "disk";
-      device = "/dev/nvme0n1";
+      device = "/dev/disk/by-id/nvme-CT500P3SSD8_2234E65A6AD2";
       content = {
         type = "gpt";
         partitions = {
@@ -95,10 +95,10 @@
       };
     };
 
-    # ── HDD — data drive ────────────────────────────────────────────────────────
+    # ── SATA SSD — data drive (Crucial MX500) ───────────────────────────────────
     disk.hdd = {
       type   = "disk";
-      device = "/dev/sda"; # consider using /dev/disk/by-id/... for stability
+      device = "/dev/disk/by-id/ata-CT500MX500SSD1_2013E297EA30";
       content = {
         type = "gpt";
         partitions = {
@@ -111,7 +111,7 @@
               subvolumes = {
                 "@data" = {
                   mountpoint   = "/data";
-                  mountOptions = [ "compress=zstd" "noatime" "autodefrag" ];
+                  mountOptions = [ "compress=zstd" "noatime" "ssd" "discard=async" ];
                 };
               };
             };
