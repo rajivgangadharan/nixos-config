@@ -4,12 +4,14 @@
 #
 # Setup steps:
 #   1. Copy hardware-configuration.nix from the installer (nixos-generate-config)
-#   2. Add the home-manager channel:
+#   2. Add required channels:
+#        sudo nix-channel --add \
+#          https://github.com/nix-community/disko/archive/main.tar.gz disko
 #        sudo nix-channel --add \
 #          https://github.com/nix-community/home-manager/archive/release-24.11.tar.gz \
 #          home-manager
 #        sudo nix-channel --update
-#   3. Uncomment the home-manager block at the bottom
+#   3. Uncomment the disko + disk-config and home-manager imports below
 #   4. sudo nixos-rebuild switch
 # =============================================================================
 { config, pkgs, lib, ... }:
@@ -17,7 +19,11 @@
 {
   imports = [
     ./hardware-configuration.nix
-    # <home-manager/nixos>   # ← uncomment after step 2 above
+    # Disko — declarative disk partitioning (requires disko channel, see step 2)
+    # <disko/module.nix>   # ← uncomment after adding disko channel
+    # ./disk-config.nix    # ← uncomment together with the line above
+    # Home Manager — user dotfiles (requires home-manager channel, see step 2)
+    # <home-manager/nixos> # ← uncomment after adding home-manager channel
   ];
 
   # ── Boot ────────────────────────────────────────────────────────────────────
