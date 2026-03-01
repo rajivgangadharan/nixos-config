@@ -194,7 +194,8 @@
   # home-manager = {
   #   useGlobalPkgs   = true;  # use system pkgs in home.nix
   #   useUserPackages = true;  # install user packages into profile
-  #   users.rajivg    = import ./home-config/home.nix;
+  #   users.rajivg    = import ./home-config/home-rajivg.nix;
+  #   users.rishir    = import ./home-config/home-rishir.nix;
   # };
 
   system.stateVersion = "24.11";

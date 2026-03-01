@@ -1,11 +1,12 @@
 # =============================================================================
-# Home Manager — Regolith 3.x look & feel for NixOS
+# Home Manager — shared Regolith 3.x desktop module
+#
+# Generic module: does NOT set home.username / home.homeDirectory.
+# Import this from a per-user wrapper (home-rajivg.nix, home-rishir.nix …)
+# that sets those identity fields.
 #
 # Manages: i3 config, i3blocks, picom, dunst, rofi, GTK theme,
 #          Xresources (Solarized Dark), alacritty
-#
-# Apply (NixOS module): see home-manager block in configuration.nix
-# Apply (standalone):   home-manager switch -f ./home-config/home.nix
 # =============================================================================
 { config, pkgs, lib, ... }:
 
@@ -33,9 +34,7 @@ let
   polkitAgent = "${pkgs.polkit_gnome}/lib/polkit-gnome/polkit-gnome-authentication-agent-1";
 
 in {
-  home.username      = "rajivg";
-  home.homeDirectory = "/home/rajivg";
-  home.stateVersion  = "24.11";
+  home.stateVersion = "24.11";
 
   home.packages = with pkgs; [
     i3lock-color  # used by $mod+Escape lock keybinding
