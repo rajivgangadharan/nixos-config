@@ -26,10 +26,10 @@
             };
           };
 
-          # Swap
+          # Swap — must be >= RAM (32G) for hibernation
           swap = {
             type = "8200"; # Linux swap GPT type
-            size = "8G";
+            size = "36G";
             content.type = "swap";
           };
 
@@ -45,6 +45,12 @@
                 "@" = {
                   mountpoint   = "/";
                   mountOptions = [ "compress=zstd" "noatime" "ssd" "discard=async" ];
+                };
+
+                # Temporary files — no compression (transient, I/O-heavy)
+                "@tmp" = {
+                  mountpoint   = "/tmp";
+                  mountOptions = [ "noatime" "ssd" "discard=async" ];
                 };
 
                 # Optional software
@@ -101,12 +107,6 @@
                 "@log" = {
                   mountpoint   = "/var/log";
                   mountOptions = [ "compress=zstd" "noatime" "ssd" "discard=async" ];
-                };
-
-                # Temporary files — no compression (transient data)
-                "@tmp" = {
-                  mountpoint   = "/tmp";
-                  mountOptions = [ "noatime" "ssd" "discard=async" ];
                 };
 
                 "@data" = {
