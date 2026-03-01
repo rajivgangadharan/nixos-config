@@ -293,8 +293,8 @@ in {
           "XF86AudioPrev"          = "exec --no-startup-id playerctl previous";
 
           # ── Screenshots ───────────────────────────────────────────────────────────
-          "Print"                  = "exec --no-startup-id scrot '%Y-%m-%d_%H-%M-%S.png' -e 'mv $f ~/Pictures/ && notify-send -t 2000 \" Screenshot\" \"Saved to ~/Pictures\"'";
-          "Shift+Print"            = "exec --no-startup-id scrot -s '%Y-%m-%d_%H-%M-%S.png' -e 'mv $f ~/Pictures/ && notify-send -t 2000 \" Screenshot\" \"Saved to ~/Pictures\"'";
+          "Print"                  = "exec --no-startup-id mkdir -p ~/Pictures && scrot '%Y-%m-%d_%H-%M-%S.png' -e 'mv $f ~/Pictures/ && notify-send -t 2000 \" Screenshot\" \"Saved to ~/Pictures\"'";
+          "Shift+Print"            = "exec --no-startup-id mkdir -p ~/Pictures && scrot -s '%Y-%m-%d_%H-%M-%S.png' -e 'mv $f ~/Pictures/ && notify-send -t 2000 \" Screenshot\" \"Saved to ~/Pictures\"'";
         };
 
       # ── Resize mode (mirrors 50_resize-mode) ────────────────────────────────────
