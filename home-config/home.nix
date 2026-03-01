@@ -198,8 +198,8 @@ in {
           # Scratchpad
           "${mod}+ctrl+a"          = "scratchpad show";
           "${mod}+ctrl+m"          = "move to scratchpad";
-          # Last focused window (replaces i3-swap-focus)
-          "${mod}+period"          = "focus last";
+          # focus last is not a built-in i3 command; bind removed to avoid parse error.
+          # Re-enable with a helper like i3-cycle-focus if needed.
 
           # ── Move windows (40_workspace-config) ───────────────────────────────────
           "${mod}+Shift+h"         = "move left";
@@ -322,8 +322,8 @@ in {
       # ── Startup applications ──────────────────────────────────────────────────────
       startup = [
         # Wallpaper — solid Solarized Dark base03 (#002b36)
-        # Replace with: feh --bg-scale /path/to/wallpaper.jpg
-        { command = "feh --bg-color '#002b36'"; always = true; notification = false; }
+        # Replace with: feh --bg-scale /path/to/wallpaper.jpg  then remove the xsetroot line
+        { command = "xsetroot -solid '#002b36'"; always = true; notification = false; }
 
         # Compositor (picom) — GLX backend with shadows + fading
         # Config written to ~/.config/picom/picom.conf below
@@ -416,7 +416,10 @@ in {
         show_age_threshold = 60
         word_wrap         = yes
         ignore_newline    = no
-        geometry          = "350x5-12+42"
+        width             = 350
+        height            = 300
+        origin            = top-right
+        offset            = 12x42
         transparency      = 8
         idle_threshold    = 120
         monitor           = 0

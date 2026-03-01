@@ -31,7 +31,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Hibernation — swap is partition 2 on the NVMe (36G, matches 32G RAM)
-  boot.resumeDevice = "/dev/disk/by-id/nvme-CT500P3SSD8_2234E65A6AD2-part2";
+  boot.resumeDevice = "/dev/disk/by-id/nvme-CT500P3SSD8_2234E65A6AD2-part3";
 
   # ── Networking ───────────────────────────────────────────────────────────────
   networking.hostName             = "nixos"; # ← change to your hostname
@@ -43,10 +43,36 @@
 
   # ── Users ────────────────────────────────────────────────────────────────────
   users.users.rajivg = {
-    isNormalUser = true;
-    extraGroups  = [ "wheel" "networkmanager" "video" "audio" "input" ];
-    shell        = pkgs.bash;
+    isNormalUser    = true;
+    description     = "Rajiv G";
+    extraGroups     = [ "wheel" "networkmanager" "video" "audio" "input" ];
+    shell           = pkgs.bash;
+    initialPassword = "nixos"; # ← temporary; forced to change on first login
   };
+
+  users.users.rishir = {
+    isNormalUser    = true;
+    description     = "Rishi Rajiv";
+    extraGroups     = [ "networkmanager" "video" "audio" "input" ]; # no wheel — not a sudoer
+    shell           = pkgs.bash;
+    initialPassword = "nixos"; # ← temporary; forced to change on first login
+  };
+
+  # Force both users to set a new password on first login.
+  # chage -d 0 sets sp_lstchg = 0, which PAM/login treat as "expired: must change now".
+  # The state file prevents this from re-triggering on every nixos-rebuild.
+  system.activationScripts.forcePasswordExpiry = {
+    deps = [ "users" ];
+    text = ''
+      for user in rajivg rishir; do
+        state="/var/lib/nixos/pw-expire-done-$user"
+        if [ ! -f "$state" ]; then
+          chage -d 0 "$user" 2>/dev/null && touch "$state"
+        fi
+      done
+    '';
+  };
+
   security.sudo.wheelNeedsPassword = true;
 
   # ── Display — Regolith-style i3 desktop ──────────────────────────────────────
@@ -156,11 +182,12 @@
     pavucontrol           # GUI audio control
 
     # ── Essentials ──────────────────────────────────────────────────────────────
-    git curl wget htop
+    git curl wget htop xorg.xsetroot
   ];
 
   # ── Hardware ──────────────────────────────────────────────────────────────────
-  hardware.enableAllFirmware = true;
+  nixpkgs.config.allowUnfree = true;   # required by hardware.enableAllFirmware
+  hardware.enableAllFirmware  = true;
 
   # ── Home Manager (user dotfiles: i3 config, picom, dunst, GTK, alacritty…) ───
   # After adding the home-manager channel (step 2), uncomment this block:
