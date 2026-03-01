@@ -47,31 +47,7 @@
                   mountOptions = [ "compress=zstd" "noatime" "ssd" "discard=async" ];
                 };
 
-                # User home — snapshotted independently of root
-                "@home" = {
-                  mountpoint   = "/home";
-                  mountOptions = [ "compress=zstd" "noatime" "ssd" "discard=async" ];
-                };
-
-                # Variable data — excluded from root snapshots; @log mounts on top
-                "@var" = {
-                  mountpoint   = "/var";
-                  mountOptions = [ "compress=zstd" "noatime" "ssd" "discard=async" ];
-                };
-
-                # System logs — finer granularity than @var; persists across rollbacks
-                "@log" = {
-                  mountpoint   = "/var/log";
-                  mountOptions = [ "compress=zstd" "noatime" "ssd" "discard=async" ];
-                };
-
-                # Temporary files — no compression (transient data, not worth the overhead)
-                "@tmp" = {
-                  mountpoint   = "/tmp";
-                  mountOptions = [ "noatime" "ssd" "discard=async" ];
-                };
-
-                # Optional software — excluded from root snapshots
+                # Optional software
                 "@opt" = {
                   mountpoint   = "/opt";
                   mountOptions = [ "compress=zstd" "noatime" "ssd" "discard=async" ];
@@ -103,10 +79,34 @@
               extraArgs = [ "-f" "-L" "data" ];
 
               subvolumes = {
-                # Nix store — large, read-heavy; kept off the root NVMe
+                # Nix store — large, read-heavy
                 "@nix" = {
                   mountpoint   = "/nix";
                   mountOptions = [ "compress=zstd" "noatime" "ssd" "discard=async" ];
+                };
+
+                # User home — snapshotted independently of root
+                "@home" = {
+                  mountpoint   = "/home";
+                  mountOptions = [ "compress=zstd" "noatime" "ssd" "discard=async" ];
+                };
+
+                # Variable data — @log mounts on top for finer granularity
+                "@var" = {
+                  mountpoint   = "/var";
+                  mountOptions = [ "compress=zstd" "noatime" "ssd" "discard=async" ];
+                };
+
+                # System logs — persists across root rollbacks
+                "@log" = {
+                  mountpoint   = "/var/log";
+                  mountOptions = [ "compress=zstd" "noatime" "ssd" "discard=async" ];
+                };
+
+                # Temporary files — no compression (transient data)
+                "@tmp" = {
+                  mountpoint   = "/tmp";
+                  mountOptions = [ "noatime" "ssd" "discard=async" ];
                 };
 
                 "@data" = {
