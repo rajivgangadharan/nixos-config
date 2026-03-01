@@ -37,7 +37,6 @@ in {
   home.stateVersion = "24.11";
 
   home.packages = with pkgs; [
-    i3lock-color  # used by $mod+Escape lock keybinding
     arandr        # display layout GUI
     pavucontrol   # audio control GUI
   ];

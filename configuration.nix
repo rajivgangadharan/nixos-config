@@ -151,6 +151,7 @@
     xdotool               # window manipulation (used for kill keybinding)
     xdg-utils             # xdg-open, xdg-settings
     xss-lock              # auto-lock on screen blank / suspend
+    i3lock-color          # screen lock — called by xss-lock, must be system-wide
 
     # ── GTK theming ─────────────────────────────────────────────────────────────
     arc-theme             # Arc-Dark GTK theme (close to SolArc-Dark)
