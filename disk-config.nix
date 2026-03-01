@@ -70,6 +70,18 @@
                   mountpoint   = "/var";
                   mountOptions = [ "compress=zstd" "noatime" "ssd" "discard=async" ];
                 };
+
+                # Root snapshots — must be on NVMe pool to snapshot @ and @var
+                "@snapshots" = {
+                  mountpoint   = "/.snapshots";
+                  mountOptions = [ "compress=zstd" "noatime" "ssd" "discard=async" ];
+                };
+
+                # Var snapshots — same NVMe pool as @var
+                "@var_snapshots" = {
+                  mountpoint   = "/var/.snapshots";
+                  mountOptions = [ "compress=zstd" "noatime" "ssd" "discard=async" ];
+                };
               };
             };
           };
@@ -91,20 +103,26 @@
               extraArgs = [ "-f" "-L" "data" ];
 
               subvolumes = {
-                # Snapshots (used by snapper / btrbk) — bulk storage, fits on SATA
-                "@snapshots" = {
-                  mountpoint   = "/.snapshots";
-                  mountOptions = [ "compress=zstd" "noatime" "ssd" "discard=async" "nofail" "x-systemd.device-timeout=5" ];
-                };
-
                 # User home — snapshotted independently of root
                 "@home" = {
                   mountpoint   = "/home";
                   mountOptions = [ "compress=zstd" "noatime" "ssd" "discard=async" "nofail" "x-systemd.device-timeout=5" ];
                 };
 
+                # Home snapshots — must be on SATA pool to snapshot @home
+                "@home_snapshots" = {
+                  mountpoint   = "/home/.snapshots";
+                  mountOptions = [ "compress=zstd" "noatime" "ssd" "discard=async" "nofail" "x-systemd.device-timeout=5" ];
+                };
+
                 "@data" = {
                   mountpoint   = "/data";
+                  mountOptions = [ "compress=zstd" "noatime" "ssd" "discard=async" "nofail" "x-systemd.device-timeout=5" ];
+                };
+
+                # Data snapshots — same SATA pool as @data
+                "@data_snapshots" = {
+                  mountpoint   = "/data/.snapshots";
                   mountOptions = [ "compress=zstd" "noatime" "ssd" "discard=async" "nofail" "x-systemd.device-timeout=5" ];
                 };
               };
